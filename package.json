@@ -1,0 +1,52 @@
+{
+  "name": "easy-confetti",
+  "version": "0.0.1-alpha.1",
+  "description": "EasyConfetti is designed to create confetti animations and provides flexible, customisable confetti animations that can be easily integrated into a web page to create visual effects.",
+  "author": "ux-ui.pro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ux-ui-pro/easy-confetti.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ux-ui-pro/easy-confetti/issues"
+  },
+  "homepage": "https://github.com/ux-ui-pro/easy-confetti",
+  "sideEffects": false,
+  "main": "dist/easy-confetti.js",
+  "module": "dist/easy-confetti.module.js",
+  "targets": {
+    "main": {
+      "source": "src/EasyConfetti.js"
+    },
+    "module": {
+      "source": "src/EasyConfetti.js"
+    }
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "clean": "rm -rf dist .parcel-cache",
+    "build": "yarn clean && parcel build",
+    "lint:js": "eslint --ext .js",
+    "lintfix": "yarn lint:js --fix"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "parcel": "^2.12.0"
+  },
+  "keywords": [
+    "javascript",
+    "confetti",
+    "animation",
+    "canvas",
+    "particle effects",
+    "web development",
+    "front-end",
+    "DOM manipulation",
+    "customizable effects",
+    "web animations",
+    "easy confetti"
+  ]
+}
