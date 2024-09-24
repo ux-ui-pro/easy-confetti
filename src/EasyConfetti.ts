@@ -22,16 +22,19 @@ class EasyConfetti {
   constructor(params: Partial<ConfettiParams> = {}) {
     this.confetti = document.createElement('canvas');
     this.confetti.id = 'easy-confetti';
+
     document.body.appendChild(this.confetti);
 
     const context = this.confetti.getContext('2d');
+
     if (!context) {
       throw new Error('Canvas context not available');
     }
-    this.confettiCtx = context;
 
+    this.confettiCtx = context;
     this.container = { w: 0, h: 0 };
     this.sprinkler = document.getElementById('sprinkler') as HTMLElement;
+
     if (!this.sprinkler) {
       throw new Error('Element with id "sprinkler" not found');
     }
@@ -101,6 +104,7 @@ class EasyConfetti {
     const {
       left, top, width, height,
     } = this.sprinkler.getBoundingClientRect();
+
     const confettiRect = this.confetti.getBoundingClientRect();
 
     const clickPosition = {
@@ -171,11 +175,15 @@ class EasyConfetti {
 
   public destroy(): void {
     this.resizeObserver.unobserve(this.confetti);
+
     this.hideConfetti();
+
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
+
       this.animationFrameId = null;
     }
+
     document.body.removeChild(this.confetti);
   }
 

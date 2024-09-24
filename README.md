@@ -10,7 +10,7 @@
 </div>
 
 <p align="center">EasyConfetti is designed to create confetti animations and provides flexible, customisable confetti animations that can be easily integrated into a web page to create visual effects.</p>
-<p align="center"><sup>1kB gzipped</sup></p>
+<p align="center"><sup>1.5kB gzipped</sup></p>
 <p align="center"><a href="https://codepen.io/ux-ui/full/NWmaVKQ">Demo</a></p>
 <br>
 

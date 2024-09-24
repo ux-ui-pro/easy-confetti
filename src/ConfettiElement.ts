@@ -1,22 +1,22 @@
 interface ColorPair {
-    front: string;
-    back: string;
+  front: string;
+  back: string;
 }
 
 interface ConfettiParams {
-    particleCount: number;
-    particleSizeRange: { width: [number, number]; height: [number, number] };
-    initialSpeed: number;
-    gravity: number;
-    airResistance: number;
-    maxFallSpeed: number;
-    flipFrequency: number;
-    colors: ColorPair[];
+  particleCount: number;
+  particleSizeRange: { width: [number, number]; height: [number, number] };
+  initialSpeed: number;
+  gravity: number;
+  airResistance: number;
+  maxFallSpeed: number;
+  flipFrequency: number;
+  colors: ColorPair[];
 }
 
 interface Position {
-    x: number;
-    y: number;
+  x: number;
+  y: number;
 }
 
 class ConfettiElement {
