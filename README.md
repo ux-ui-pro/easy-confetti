@@ -64,7 +64,7 @@ const confettiParams = {
 
 const easyConfetti = new EasyConfetti(confettiParams);
 
-easyConfetti.init();
+easyConfetti.sprinkle();
 ```
 <br>
 Triggering the animation multiple times with a specified interval
@@ -72,11 +72,17 @@ Triggering the animation multiple times with a specified interval
 
 ```javascript
 const sprinkleMultiple = (times, interval) => {
-  Array.from({ length: times }).forEach((_, i) => {
-    setTimeout(() => {
-      easyConfetti.sprink();
-    }, i * interval);
-  });
+  let count = 0;
+
+  const intervalId = setInterval(() => {
+    easyConfetti.sprinkle();
+
+    count++;
+
+    if (count === times) {
+      clearInterval(intervalId);
+    }
+  }, interval);
 };
 ```
 <br>
