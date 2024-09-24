@@ -37,6 +37,7 @@ easyConfetti.init();
 ```
 <br>
 Initialization with specified parameters
+<br>
 
 ```javascript
 const confettiParams = {
@@ -67,6 +68,7 @@ easyConfetti.init();
 ```
 <br>
 Triggering the animation multiple times with a specified interval
+<br>
 
 ```javascript
 const sprinkleMultiple = (times, interval) => {
