@@ -16,7 +16,6 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: 'EasyConfetti',
       formats: ['es', 'cjs', 'umd'],
-      fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
       plugins: [
