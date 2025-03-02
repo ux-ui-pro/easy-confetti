@@ -1,23 +1,15 @@
-import ConfettiElement from './ConfettiElement.ts';
+import ConfettiElement, { ConfettiParams, Position } from './ConfettiElement';
 
 class EasyConfetti {
   private confetti: HTMLCanvasElement;
-
   private confettiCtx: CanvasRenderingContext2D;
-
   private container: { w: number; h: number };
-
   private confettiElements: ConfettiElement[] = [];
-
   private sprinkler: HTMLElement;
-
   private confettiParams: ConfettiParams;
-
   private devicePixelRatio: number;
-
   private animationFrameId: number | null = null;
-
-  private resizeObserver: ResizeObserver;
+  private resizeObserver!: ResizeObserver;
 
   constructor(params: Partial<ConfettiParams> = {}) {
     this.confetti = document.createElement('canvas');
@@ -53,7 +45,7 @@ class EasyConfetti {
         { front: '#FF5733', back: '#C70039' },
         { front: '#DAF7A6', back: '#FFC300' },
       ],
-    };
+    } as ConfettiParams;
 
     this.init();
   }
@@ -64,12 +56,9 @@ class EasyConfetti {
 
   private setupCanvas(): void {
     const rect = this.confetti.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
-
-    this.container = { w, h };
-    this.confetti.width = w * this.devicePixelRatio;
-    this.confetti.height = h * this.devicePixelRatio;
+    this.container = { w: rect.width, h: rect.height };
+    this.confetti.width = rect.width * this.devicePixelRatio;
+    this.confetti.height = rect.height * this.devicePixelRatio;
     this.confettiCtx.scale(this.devicePixelRatio, this.devicePixelRatio);
   }
 
@@ -80,7 +69,6 @@ class EasyConfetti {
 
     this.confettiElements.forEach((c) => {
       c.update();
-
       this.confettiCtx.save();
       this.confettiCtx.translate(c.position.x, c.position.y);
       this.confettiCtx.rotate(c.rotation);
@@ -101,37 +89,33 @@ class EasyConfetti {
   };
 
   private addConfetti(): void {
-    const {
-      left, top, width, height,
-    } = this.sprinkler.getBoundingClientRect();
-
+    const { left, top, width, height } = this.sprinkler.getBoundingClientRect();
     const confettiRect = this.confetti.getBoundingClientRect();
 
-    const clickPosition = {
+    const position: Position = {
       x: left + width / 2 - confettiRect.left,
       y: top + height / 2 - confettiRect.top,
     };
 
     this.confettiElements.push(
-      ...Array.from({ length: this.confettiParams.particleCount }, () => this.createConfettiElement(clickPosition)),
+      ...Array.from({ length: this.confettiParams.particleCount }, () =>
+        this.createConfettiElement(position),
+      ),
     );
   }
 
   private createConfettiElement(position: Position): ConfettiElement {
-    const {
-      particleSizeRange,
-      initialSpeed,
-      flipFrequency,
-      maxFallSpeed,
-      colors,
-    } = this.confettiParams;
+    const { particleSizeRange, initialSpeed, flipFrequency, maxFallSpeed, colors } =
+      this.confettiParams;
 
+    const sizeRange = particleSizeRange;
+    const colorList = colors;
     const randomModifier = EasyConfetti.rand(-1, 1);
-    const colorPair = colors[Math.floor(EasyConfetti.rand(0, colors.length))];
+    const colorPair = colorList[Math.floor(EasyConfetti.rand(0, colorList.length))];
 
     const dimensions = {
-      width: EasyConfetti.rand(particleSizeRange.width[0], particleSizeRange.width[1]),
-      height: EasyConfetti.rand(particleSizeRange.height[0], particleSizeRange.height[1]),
+      width: EasyConfetti.rand(sizeRange.width[0], sizeRange.width[1]),
+      height: EasyConfetti.rand(sizeRange.height[0], sizeRange.height[1]),
     };
 
     const velocity = {
@@ -175,7 +159,6 @@ class EasyConfetti {
 
   public destroy(): void {
     this.resizeObserver.unobserve(this.confetti);
-
     this.hideConfetti();
 
     if (this.animationFrameId !== null) {
