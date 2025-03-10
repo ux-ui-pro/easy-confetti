@@ -56,6 +56,7 @@ class EasyConfetti {
 
   private setupCanvas(): void {
     const rect = this.confetti.getBoundingClientRect();
+
     this.container = { w: rect.width, h: rect.height };
     this.confetti.width = rect.width * this.devicePixelRatio;
     this.confetti.height = rect.height * this.devicePixelRatio;
