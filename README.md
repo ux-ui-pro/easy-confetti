@@ -1,46 +1,51 @@
-<br>
-<p align="center"><strong>easy-confetti</strong></p>
+# easy-confetti
 
-<div align="center">
+Flexible, customisable canvas confetti animations for the web.
 
 [![npm](https://img.shields.io/npm/v/easy-confetti.svg?colorB=brightgreen)](https://www.npmjs.com/package/easy-confetti)
-[![GitHub package version](https://img.shields.io/github/package-json/v/ux-ui-pro/easy-confetti.svg)](https://github.com/ux-ui-pro/easy-confetti)
-[![NPM Downloads](https://img.shields.io/npm/dm/easy-confetti.svg?style=flat)](https://www.npmjs.org/package/easy-confetti)
+[![NPM Downloads](https://img.shields.io/npm/dm/easy-confetti.svg?style=flat)](https://www.npmjs.com/package/easy-confetti)
 
-</div>
+[Demo](https://codepen.io/ux-ui/full/NWmaVKQ)
 
-<p align="center">EasyConfetti is designed to create confetti animations and provides flexible, customisable confetti animations that can be easily integrated into a web page to create visual effects.</p>
-<p align="center"><sup>1.7kB gzipped</sup></p>
-<p align="center"><a href="https://codepen.io/ux-ui/full/NWmaVKQ">Demo</a></p>
-<br>
+---
 
-&#10148; **Install**
+- Canvas-based confetti with front/back colour flip per particle.
+- Configurable particle count, size range, speed, gravity, and palette.
+- Sprinkles from a DOM anchor element (`#sprinkler`).
+- `sprinkle()` on demand; `destroy()` tears down canvas and observers.
 
-```console
-yarn add easy-confetti
+---
+
+## Installation
+
+```bash
+npm install easy-confetti
 ```
-<br>
 
-&#10148; **Import**
+## Quick Start
 
-```javascript
+Add a sprinkler anchor in your markup, then create an instance:
+
+```html
+<div id="sprinkler"></div>
+```
+
+```ts
 import EasyConfetti from 'easy-confetti';
-```
-<br>
 
-&#10148; **Usage**
-
-```javascript
 const easyConfetti = new EasyConfetti();
 
-easyConfetti.init();
+easyConfetti.sprinkle();
 ```
-<br>
-Initialization with specified parameters
-<br>
 
-```javascript
-const confettiParams = {
+The constructor appends a full-page canvas and starts the animation loop. Call `sprinkle()` to emit a burst of particles from the sprinkler position.
+
+## Options
+
+Pass a partial options object to the constructor:
+
+```ts
+const easyConfetti = new EasyConfetti({
   particleCount: 70,
   particleSizeRange: {
     width: [5, 20],
@@ -55,28 +60,39 @@ const confettiParams = {
     { front: '#4C9E14', back: '#30610A' },
     { front: '#CC7600', back: '#874900' },
     { front: '#FF4E44', back: '#AA302B' },
-    { front: '#E6427E', back: '#933155' },
-    { front: '#7D61A1', back: '#49306C' },
-    { front: '#4A5F9A', back: '#2A3B5C' },
-    { front: '#00A3A3', back: '#006969' },
   ],
-};
-
-const easyConfetti = new EasyConfetti(confettiParams);
-
-easyConfetti.sprinkle();
+});
 ```
-<br>
-Triggering the animation multiple times with a specified interval
-<br>
 
-```javascript
-const sprinkleMultiple = (times, interval) => {
+| Option              | Type                                                    | Default                                                                            | Description                                                                 |
+|:--------------------|:--------------------------------------------------------|:----------------------------------------------------------------------------------:|:----------------------------------------------------------------------------|
+| `particleCount`     | `number`                                                | `70`                                                                               | Number of confetti particles per `sprinkle()` call.                         |
+| `particleSizeRange` | `{ width: [number, number]; height: [number, number] }` | `{ width: [5, 20], height: [10, 18] }`                                             | Width and height range for each particle.                                   |
+| `initialSpeed`      | `number`                                                | `25`                                                                               | Initial launch speed of particles.                                          |
+| `gravity`           | `number`                                                | `0.65`                                                                             | Gravity applied each frame.                                                 |
+| `airResistance`     | `number`                                                | `0.08`                                                                             | Air resistance factor.                                                      |
+| `maxFallSpeed`      | `number`                                                | `6`                                                                                | Terminal fall speed cap.                                                    |
+| `flipFrequency`     | `number`                                                | `0.017`                                                                            | Frequency of front/back colour flip.                                        |
+| `colors`            | `Array<{ front: string; back: string }>`              | `[{ front: '#FF5733', back: '#C70039' }, { front: '#DAF7A6', back: '#FFC300' }]` | Colour pairs; particles flip between `front` and `back` while falling.      |
+
+## Methods
+
+```ts
+easyConfetti.sprinkle();
+easyConfetti.destroy();
+```
+
+- `sprinkle()` — emits one burst of particles from the `#sprinkler` element.
+- `destroy()` — stops the animation loop, disconnects `ResizeObserver`, and removes the canvas.
+
+### Repeated bursts
+
+```ts
+const sprinkleMultiple = (times: number, interval: number) => {
   let count = 0;
 
   const intervalId = setInterval(() => {
     easyConfetti.sprinkle();
-
     count++;
 
     if (count === times) {
@@ -85,22 +101,12 @@ const sprinkleMultiple = (times, interval) => {
   }, interval);
 };
 ```
-<br>
 
-&#10148; **Parameters**
+## Requirements
 
-| Option              |                          Type                           |                                      Default                                       | Description                                                                                                                          |
-|:--------------------|:-------------------------------------------------------:|:----------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------|
-| `particleCount`     |                        `number`                         |                                        `70`                                        | This parameter determines the number of confetti particles to be generated.                                                          |
-| `particleSizeRange` | `{ width: [number, number], height: [number, number] }` |                       `{ width: [5, 20], height: [10, 18] }`                       | This parameter sets the range for the width and height of the confetti particles.                                                    |
-| `initialSpeed`      |                        `number`                         |                                        `25`                                        | This parameter defines the initial speed at which the confetti particles are launched.                                               |
-| `gravity`           |                        `number`                         |                                       `0.65`                                       | This parameter sets the gravity effect on the confetti particles, influencing how quickly they fall.                                 |
-| `airResistance`     |                        `number`                         |                                       `0.08`                                       | This parameter determines the air resistance effect on the confetti particles, affecting how quickly they decelerate.                |
-| `maxFallSpeed`      |                        `number`                         |                                        `6`                                         | This parameter sets the maximum fall speed of the confetti particles.                                                                |
-| `flipFrequency`     |                        `number`                         |                                      `0.017`                                       | This parameter defines the frequency of the confetti particles flipping between their front and back colors.                         |
-| `colors`            |        `Array<{ front: string, back: string }>`         | `[ { front: '#FF5733', back: '#C70039' }, { front: '#DAF7A6', back: '#FFC300' } ]` | This parameter is an array of color pairs for the confetti particles, where each particle can flip between a front and a back color. |
-<br>
+- A DOM element with `id="sprinkler"` must exist before constructing `EasyConfetti`.
+- Browser APIs: `canvas`, `requestAnimationFrame`, `ResizeObserver`.
 
-&#10148; **License**
+## License
 
-easy-confetti is released under MIT license
+MIT
