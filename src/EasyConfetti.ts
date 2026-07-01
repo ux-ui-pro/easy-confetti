@@ -1,4 +1,4 @@
-import ConfettiElement, { ConfettiParams, Position } from './ConfettiElement';
+import ConfettiElement, { type ConfettiParams, type Position } from './ConfettiElement';
 
 class EasyConfetti {
   private confetti: HTMLCanvasElement;
